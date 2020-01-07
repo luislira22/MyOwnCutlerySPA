@@ -6,8 +6,9 @@ const OperationTable = props => (
         <thead>
             <tr>
                 <th scope="col">Description</th>
-                <th scope="col">Duration</th>
                 <th scope="col">Tool</th>
+                <th scope="col">Setup Time</th>
+                <th scope="col">Exec Time</th>
             </tr>
         </thead>
         <tbody>
@@ -26,8 +27,9 @@ const OperationRow = props => {
     return (
         <tr>
             <td>{props.operation.description}</td>
-            <td>{props.operation.duration}</td>
             <td>{props.operation.tool}</td>
+            <td>{props.operation.setupTime}</td>
+            <td>{props.operation.duration}</td>
         </tr>
     )
 }
