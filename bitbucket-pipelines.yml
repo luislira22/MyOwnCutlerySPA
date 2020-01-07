@@ -1,0 +1,33 @@
+image: node:10.15.0
+pipelines:
+  default:
+    - step:
+        name: Build
+        script:
+          - npm install
+    - step:
+        name: Unit Tests
+        script:
+          - echo "Unit Tests"
+    - step:
+        name: E2E Tests
+        script:
+          #- npm run test:cypress
+          - echo "End2End"
+    - step:
+        name: Create Artifact
+        script:
+          - tar czfv application.tgz src/ public/ package-lock.json package.json
+        artifacts:
+          - application.tgz
+    - step:
+        name: Deploy to production
+        deployment: production
+        script:
+          - pipe: atlassian/heroku-deploy:0.1.1
+            variables:
+              HEROKU_API_KEY: $HEROKU_API_KEY
+              HEROKU_APP_NAME: $HEROKU_APP_NAME
+              ZIP_FILE: "application.tgz"
+          #- git remote set-url origin https://heroku:b33e38f1-1763-446e-9d23-b7d0771a624d@git.heroku.com/myowncutlery-lapr5.git
+          #- git push origin `git subtree split --prefix backend master`:master --force
